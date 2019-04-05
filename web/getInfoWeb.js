@@ -1,8 +1,9 @@
 const getInfoService = require("../service/getInfoService");
 
-function getInfoWeb(res, req) {
-  const { userid } = res.query;
-  getInfoService(userid, req);
+function getInfoWeb(req, res) {
+  const { tag = "all" } = req.query;
+  params = { tag };
+  getInfoService(params, res);
 }
 
 module.exports = getInfoWeb;

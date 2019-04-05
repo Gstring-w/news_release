@@ -3,7 +3,7 @@ const connectionMysql = require("../dao/connectionMysql");
 function loginService(params, res) {
   const { username, password } = params;
   const arr = [username, password];
-  const querySql = "SELECT * FROM `login_info` where userid=? and password=?";
+  const querySql = "SELECT * FROM `login_info` where username=? and password=?";
 
   connectionMysql(querySql, arr, (err, result) => {
     let data;

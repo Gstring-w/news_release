@@ -1,7 +1,8 @@
 const connectionMysql = require("../dao/connectionMysql");
 
-function getAllTaskService(req, arr) {
-  const querySql = "select * from alltask where teacher_id=?";
+function getCommentService(req, arr) {
+  const querySql = "select * from comment where article=?";
+  const arr = [arr];
   connectionMysql(querySql, arr, (err, result) => {
     if (err) {
       console.log(err);
@@ -15,4 +16,4 @@ function getAllTaskService(req, arr) {
   });
 }
 
-module.exports = getAllTaskService;
+module.exports = getCommentService;

@@ -1,14 +1,12 @@
 const loginWeb = require("./loginWeb");
-const upLoadWeb = require("./upLoadWeb");
-const messageWb = require("./messageWeb");
+const postCommentWeb = require("./postCommentWeb");
+const getCommentWeb = require("./getCommentWeb");
 const getInfoWeb = require("./getInfoWeb");
-const postTaskWeb = require("./postTaskWeb");
-const getAllTaskWeb = require("./getAllTaskWeb");
+const regiWeb = require("./regiWeb");
 module.exports = web = {
   loginWeb,
-  upLoadWeb,
-  messageWb,
+  getCommentWeb,
+  postCommentWeb,
   getInfoWeb,
-  postTaskWeb,
-  getAllTaskWeb
+  regiWeb
 };

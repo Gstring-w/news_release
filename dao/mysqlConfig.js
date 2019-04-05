@@ -4,7 +4,7 @@ const mysqlConfig = {
   user: "root",
   // password: "new password",
   password: "123456",
-  database: "graduate_project"
+  database: "new_release"
 };
 
 module.exports = mysqlConfig;
