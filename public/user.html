@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>雷达新闻</title>
+    <link rel="stylesheet" href="./static/css/iconfont.css" />
+    <link rel="stylesheet" href="./static/css/index.css" />
+    <link
+      href="http://cdn.bootcss.com/normalize/5.0.0/normalize.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./static/css/user.css" />
+  </head>
+  <body>
+    <div class="container wrapper-loading">
+      <header class="cf">
+        <a href="./index.html"><i class="iconfont1"></i></a>
+        <a href="./user.html"><i class="iconfont">&#xe601;</i></a>
+        <a href="#"><i class="iconfont">&#xe60e;</i></a>
+        <a href="#"><i class="iconfont">&#xe619;</i></a>
+      </header>
+    </div>
+    <div class="user" id="user1">
+      <div class="user-header">
+        <div class="user-header-avater">
+          <img
+            id="avater"
+            src="https://gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/n/nvn/static/news/imgs/person_dcc8a01.png"
+            alt=""
+          />
+        </div>
+        <div class="login-btn" id="toLogin">立即登陆</div>
+        <div class="change-btn login-btn marginTop" id="tologinEd">
+          退出登陆
+        </div>
+      </div>
+      <div class="user-item">
+        <span class="icon icon1"></span>
+        <span class="info">我的消息</span>
+      </div>
+      <div class="user-item">
+        <span class="icon icon2"></span>
+        <span class="info">我的收藏</span>
+      </div>
+      <div class="user-item">
+        <span class="icon icon3"></span>
+        <span class="info">无图模式</span>
+      </div>
+    </div>
+
+    <div class="login move-hide" id="login">
+      <div class="login-header">
+        <span class="login-header-title">登陆雷达新闻</span>
+      </div>
+      <div class="login-from">
+        <input type="text" placeholder="请输入登陆信息" id="user" />
+        <input type="password" placeholder="密码" id="pass" />
+      </div>
+      <div class="login-btn login-btn1" id="login-btn">登陆</div>
+      <a href="./register.html"
+        ><div class="login-btn login-btn1 change-btn">立即注册</div></a
+      >
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="static/js/user.js"></script>
+  </body>
+</html>
