@@ -84,3 +84,97 @@ function responseComment() {
     }
   };
 }
+
+//处理url
+window.onload = function() {
+  var articleDetails = document.getElementById("articleDetails");
+  var search = window.location.search;
+  var id = search.split("=")[1];
+
+  getUrlParamsInfo(id, renderData);
+  getComment(id, renderComment);
+};
+
+//内容
+function getUrlParamsInfo(id, cb) {
+  axios
+    .get("/infoDetails?id=" + id)
+    .catch(err => {
+      console.log(err);
+    })
+    .then(data => {
+      cb(data.data);
+    });
+}
+
+function renderData(data) {
+  var str = "";
+
+  data.forEach(item => {
+    str += `<h4>${item.title}</h4>
+    <p>
+     ${item.content}
+    </p>`;
+  });
+  articleDetails.innerHTML += str;
+}
+
+//pinglun
+
+function getComment(artcicle, cb) {
+  axios
+    .get("/comment?articleId=" + artcicle)
+    .catch(err => {
+      console.log(err);
+    })
+    .then(data => {
+      cb(data.data.data);
+    });
+}
+
+function renderComment(data) {
+  var comment;
+  console.log(data);
+  var str = "";
+  var responArr = [];
+  data.forEach(item => {
+    // 回复
+    console.log(!item.toname);
+    if (!item.toname) {
+      comment = document.getElementsByClassName("commentid")[0];
+
+      str = `<div id=${item.ownername}>
+      <div class="comment-item" >
+      <div class="avater">
+        <img src="./static/images/logined.png" alt="" />
+      </div>
+      <div class="comment-item-info">
+        <div class="info-title">${item.ownername}：</div>
+        <div class="info-comment">${item.content}</div>
+      </div>
+      <div class="response" id="response" data-target=${item.ownername}>
+        回复
+      </div>
+    </div></div>`;
+
+      comment.innerHTML += str;
+    } else {
+      responArr.push(item);
+    }
+  });
+  responArr.forEach(item => {
+    comment = document.getElementById(item.toname);
+    str = ` <div class="comment-item" id=${item.ownername}>
+    <div class="comment-item-info">
+      <div class="info-title">
+        <span class="response-target">${item.ownername}</span>
+        回复 ${item.toname}：
+      </div>
+      <div class="info-comment">${item.content}</div>
+    </div>
+    <div class="response" data-target=${item.ownername}>回复</div>
+  </div>`;
+    comment.innerHTML += str;
+    console.log(comment);
+  });
+}

@@ -18,6 +18,7 @@ app.listen(3000, () => {
 });
 // 更具新闻类型，返回数据
 app.get("/info", web.getInfoWeb); //params： ?tag=""
+app.get("/infoDetails", web.getInfoDetailsWeb); //params： ?id=""
 
 // //登陆
 app.post("/login", bobyParser.json(), web.loginWeb); //params:{username,password}

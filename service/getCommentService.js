@@ -1,8 +1,8 @@
 const connectionMysql = require("../dao/connectionMysql");
 
-function getCommentService(req, arr) {
-  const querySql = "select * from comment where article=?";
-  const arr = [arr];
+function getCommentService(articleId, req) {
+  const querySql = "select * from comment where article_id=?";
+  let arr = [articleId];
   connectionMysql(querySql, arr, (err, result) => {
     if (err) {
       console.log(err);
