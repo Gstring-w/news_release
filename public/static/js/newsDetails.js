@@ -38,7 +38,9 @@ function responseComment() {
   comment.onclick = function(e) {
     var classNameDom = e.target.getAttribute("class"),
       responseName = e.target.getAttribute("data-target");
+
     var selfName = localStorage.getItem("username");
+
     if (selfName === null) {
       alert("你还没有登陆哦");
       return;
@@ -93,6 +95,10 @@ window.onload = function() {
 
   getUrlParamsInfo(id, renderData);
   getComment(id, renderComment);
+
+  //绑定评论文章
+
+  bindEvent(id);
 };
 
 //内容
@@ -177,4 +183,77 @@ function renderComment(data) {
     comment.innerHTML += str;
     console.log(comment);
   });
+}
+
+function bindEvent(id) {
+  var response = document.getElementById("res_comment");
+
+  response.onclick = function(e) {
+    var responseName = e.target.getAttribute("data-target");
+
+    var selfName = localStorage.getItem("username");
+
+    if (selfName === null) {
+      alert("你还没有登陆哦");
+      return;
+    }
+
+    wrappSh.style.display = "block";
+    input.style.transform = "rotateY(0deg)";
+    inputText.focus();
+
+    //取消回复
+    wrappSh.onclick = function() {
+      wrappSh.style.display = "none";
+      input.style.transform = "rotateY(90deg)";
+    };
+
+    //输入回复信息
+    responseBtn.onclick = function() {
+      var value = inputText.value;
+      if (value === "") {
+        alert("不要输入空的字符串，这让我很难办o~");
+      } else {
+        //回复框消失
+        wrappSh.style.display = "none";
+        input.style.transform = "rotateY(90deg)";
+
+        //插入回复
+        var str = `<div id=${selfName}>
+        <div class="comment-item" >
+        <div class="avater">
+          <img src="./static/images/logined.png" alt="" />
+        </div>
+        <div class="comment-item-info">
+          <div class="info-title">${selfName}</div>
+          <div class="info-comment">${value}</div>
+        </div>
+        <div class="response" id="response" data-target=${selfName}>
+          回复
+        </div>
+      </div></div>`;
+        comment.innerHTML += str;
+      }
+
+      var params = {
+        article_id: id,
+        content: value,
+        ownername: selfName,
+        toname: null
+      };
+      postCommentMessage(params);
+    };
+  };
+}
+
+// {article_id,content,ownername,toname?}
+function postCommentMessage(params) {
+  axios
+    .post("/comment_post", params)
+    .catch(err => {
+      console.log(err);
+    })
+    .then(data => {
+      console.log(data);
+    });
 }

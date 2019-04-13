@@ -19,13 +19,14 @@ app.listen(3000, () => {
 // 更具新闻类型，返回数据
 app.get("/info", web.getInfoWeb); //params： ?tag=""
 app.get("/infoDetails", web.getInfoDetailsWeb); //params： ?id=""
-
+app.get("/delete", web.deleteWeb); //params： ?id=""
 // //登陆
 app.post("/login", bobyParser.json(), web.loginWeb); //params:{username,password}
 // //注册
-
 app.get("/regier", bobyParser.json(), web.regiWeb); // params:{username,password}
 
 // // 获取评论信息
 app.get("/comment", web.getCommentWeb); //?article=111
 app.post("/comment_post", bobyParser.json(), web.postCommentWeb); // params {article_id,content,ownername,toname?}
+
+app.post("/post_article", bobyParser.json(), web.postArticle);
