@@ -3,7 +3,7 @@ const postArticelService = require("../service/postArticelService");
 function postArticle(req, res) {
   const {
     newImge: image,
-    newMark: tag,
+    newtype: tag,
     newPubDate: utime,
     newTitle: title,
     newurl: content

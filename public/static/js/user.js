@@ -17,6 +17,7 @@ window.onload = function() {
   var tologinEd = document.getElementById("tologinEd");
   tologinEd.onclick = function() {
     document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    localStorage.clear();
     toLogin.innerText = "立即登陆";
     avater.src =
       "https://gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/n/nvn/static/news/imgs/person_dcc8a01.png";
@@ -43,9 +44,10 @@ function checkLogin() {
     login = document.getElementById("login"),
     avater = document.getElementById("avater");
 
-  if (value == "51502032038" && key == "username") {
+  if (cookie && value !== "undefined") {
     avater.src = "./static/images/logined.png";
-    toLogin.innerText = "自伤";
+    toLogin.innerText = value.slice(0, 4) + "...";
+    toLogin.title = value;
   } else {
     toLogin.onclick = function() {
       loginWap.style.display = "none";
@@ -65,17 +67,23 @@ function toLoginWep() {
     } else {
       //展示遮罩层loading
       showWrapper("正在登陆中...");
+      console.log({ username: user, password: pass });
       axios
         .post(baseUrl, { username: user, password: pass })
         .catch(err => {
           console.log(err);
         })
         .then(data => {
-          if (data.data.code === 200) {
+          console.log(data);
+          if (data.data.err) {
+            alert("登陆失败！！！");
+            showWrapper("登陆");
+            return;
+          } else {
             showWrapper("登陆成功！");
-            localStorage.setItem("username", data.data.data.userid);
-            document.cookie = "username=" + data.data.data.userid;
-            window.history.go("http://localhost:3000/index.html");
+            localStorage.setItem("username", data.data.data[0].username);
+            document.cookie = "username=" + data.data.data[0].username;
+            window.location.replace("http://localhost:3000/index.html");
           }
         });
     }

@@ -7,15 +7,22 @@ function loginService(params, res) {
 
   connectionMysql(querySql, arr, (err, result) => {
     let data;
-    data = {
-      code: 200,
-      data: result[0]
-    };
+    if (result.length === 0) {
+      data = {
+        err: true
+      };
+    } else {
+      data = {
+        err: false,
+        data: result
+      };
+    }
 
     if (err) {
       console.log(err);
     }
 
+    console.log(data);
     res.send(data);
   });
 }

@@ -18,7 +18,7 @@ function render(data) {
         <th><a href="http://localhost:3000/newsDetails.html?id=${
           item.id
         }">具体细节</a></th>
-        <th data-id=${item.id} id="delete">删除</th>
+        <th data-id=${item.id} class="delete">删除</th>
     </tr>`;
   });
   tableBody.innerHTML += str;
@@ -26,19 +26,28 @@ function render(data) {
 }
 
 function bindEventDelete() {
-  var deleteDom = document.getElementById("delete"),
-    deltete_id = deleteDom.getAttribute("data-id");
-  deleteDom.onclick = function() {
-    axios
-      .get("/delete?id=" + deltete_id)
-      .catch(e => {
-        console.log(e);
-      })
-      .then(data => {
-        alert("success");
-        window.location.reload();
-      });
-  };
+  var deleteDom = document.getElementsByClassName("delete") || [],
+    deleteDomArr = [].slice.call(deleteDom, 0),
+    deltete_id;
+  deleteDomArr.forEach(item => {
+    item.onclick = function(e) {
+      console.log(e.target);
+      deltete_id = e.target.getAttribute("data-id");
+      if (window.confirm(`确认删除ID为：${deltete_id} 的文章？`)) {
+        axios
+          .get("/delete?id=" + deltete_id)
+          .catch(e => {
+            console.log(e);
+          })
+          .then(data => {
+            alert("删除成功");
+            window.location.reload();
+          });
+      } else {
+        return;
+      }
+    };
+  });
 }
 
 function getUrlParamsInfo() {
@@ -62,5 +71,9 @@ function postArticle(data) {
     })
     .then(data => {
       console.log(data);
+      if (data.status === 200) {
+        alert("上传成功！！");
+        window.location.reload();
+      }
     });
 }
