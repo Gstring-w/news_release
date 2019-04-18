@@ -1,5 +1,3 @@
-const baseUrl = "http://localhost:3000/login";
-
 window.onload = function() {
   // 用户从右边划出
   hideToShowInfo();
@@ -69,7 +67,7 @@ function toLoginWep() {
       showWrapper("正在登陆中...");
       console.log({ username: user, password: pass });
       axios
-        .post(baseUrl, { username: user, password: pass })
+        .post(window._href + "/login", { username: user, password: pass })
         .catch(err => {
           console.log(err);
         })
@@ -83,7 +81,7 @@ function toLoginWep() {
             showWrapper("登陆成功！");
             localStorage.setItem("username", data.data.data[0].username);
             document.cookie = "username=" + data.data.data[0].username;
-            window.location.replace("http://localhost:3000/index.html");
+            window.location.replace(window._href + "/index.html");
           }
         });
     }

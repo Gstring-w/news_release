@@ -1,4 +1,3 @@
-const baseUrl = "http://localhost:3000/info";
 var route = document.getElementById("route");
 var articleitem = document.getElementById("articleitem");
 var flag = true;
@@ -35,7 +34,7 @@ function scollLoad() {
 
 function getNews(tag, callback) {
   axios
-    .get(baseUrl + "?tag=" + tag)
+    .get(window._href + "/info?tag=" + tag)
     .catch(err => {
       console.log(err);
     })

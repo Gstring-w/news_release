@@ -10,6 +10,11 @@ document.addEventListener("touchstart", function(event) {
   }
 });
 var lastTouchEnd = 0;
+
+var articleDetails = document.getElementById("articleDetails");
+var search = window.location.search;
+var id = search.split("=")[1];
+
 document.addEventListener(
   "touchend",
   function(event) {
@@ -81,6 +86,14 @@ function responseComment() {
           <div class="response" data-target="自伤">回复</div>
         </div>`;
           comment.innerHTML += str;
+
+          var params = {
+            article_id: id,
+            content: value,
+            ownername: selfName,
+            toname: responseName
+          };
+          postCommentMessage(params);
         }
       };
     }
@@ -89,10 +102,6 @@ function responseComment() {
 
 //处理url
 window.onload = function() {
-  var articleDetails = document.getElementById("articleDetails");
-  var search = window.location.search;
-  var id = search.split("=")[1];
-
   getUrlParamsInfo(id, renderData);
   getComment(id, renderComment);
 
@@ -104,7 +113,7 @@ window.onload = function() {
 //内容
 function getUrlParamsInfo(id, cb) {
   axios
-    .get("/infoDetails?id=" + id)
+    .get(window._href + "/infoDetails?id=" + id)
     .catch(err => {
       console.log(err);
     })
@@ -129,7 +138,7 @@ function renderData(data) {
 
 function getComment(artcicle, cb) {
   axios
-    .get("/comment?articleId=" + artcicle)
+    .get(window._href + "/comment?articleId=" + artcicle)
     .catch(err => {
       console.log(err);
     })
@@ -249,7 +258,7 @@ function bindEvent(id) {
 // {article_id,content,ownername,toname?}
 function postCommentMessage(params) {
   axios
-    .post("/comment_post", params)
+    .post(window._href + "/comment_post", params)
     .catch(err => {
       console.log(err);
     })

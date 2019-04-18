@@ -15,9 +15,9 @@ function render(data) {
         <th>${item.title}</th>
         <th>${item.utime}</th>
         <th>${item.tag}</th>
-        <th><a href="http://localhost:3000/newsDetails.html?id=${
-          item.id
-        }">具体细节</a></th>
+        <th><a href="${window._href}/newsDetails.html?id=${
+      item.id
+    }">具体细节</a></th>
         <th data-id=${item.id} class="delete">删除</th>
     </tr>`;
   });
@@ -35,7 +35,7 @@ function bindEventDelete() {
       deltete_id = e.target.getAttribute("data-id");
       if (window.confirm(`确认删除ID为：${deltete_id} 的文章？`)) {
         axios
-          .get("/delete?id=" + deltete_id)
+          .get(window._href + "/delete?id=" + deltete_id)
           .catch(e => {
             console.log(e);
           })
@@ -52,7 +52,7 @@ function bindEventDelete() {
 
 function getUrlParamsInfo() {
   axios
-    .get("/info?tag=all")
+    .get(window._href + "/info?tag=all")
     .catch(err => {
       console.log(err);
     })
@@ -65,7 +65,7 @@ function postArticle(data) {
   console.log(data);
 
   axios
-    .post("/post_article", data)
+    .post(window._href + "/post_article", data)
     .catch(e => {
       console.log(e);
     })
